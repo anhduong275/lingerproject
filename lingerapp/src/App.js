@@ -1,25 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react/cjs/react.production.min';
+import Slider from './Slider';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      users: [],
+      loadingStatus: false,
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://randomuser.me/api/?results=10")
+    .then(response => response.json())
+    .then((response) => {
+      this.setState({
+        users: response.results,
+        loadingStatus: true,
+      })
+    });
+  }
+
+  render() {
+    let {users, loadingStatus} = this.state
+
+    if (!loadingStatus) {
+      return (
+        <div>Loading user...</div>
+      )
+    } else {
+      return (
+          <div className='AppLayout'>
+            <Slider userSlide = {users}></Slider>
+          </div>
+      );
+    }
+  }
 }
+
+/*
+            {users.map(user => (
+              <img src={user.picture.medium}/>
+            ))}
+            */
 
 export default App;
