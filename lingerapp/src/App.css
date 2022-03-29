@@ -57,7 +57,16 @@
 
 .UserSlide {
   width: 100%;
-  height: 80%;
+  height: 400px;
+  background-color: #61dafb;
+  /*opacity: 0;*/
+}
+
+.UserSlide .Active {
+  width: 100%;
+  height: 400px;
+  opacity: 1;
+  background-color: yellow;
 }
 
 .UserSlide img {
