@@ -7,62 +7,49 @@ import './App.css';
 export default class Slider extends Component {
     constructor(props) {
         super(props);
-        this.userSlide = 
-            this.props.userSlide.map((user, index) => {
-                return {
-                    picture: user.picture.large,
-                    name: user.name.first + ' ' + user.name.last, 
-                    age: user.dob.age,
-                    liked: false,
-                };
-            }); //this.props.userSlide is in fact already array of users.
-            //should i move this map to upper level, aka app.js?
         this.state = {
-            currentUserIndex: 0,
-            currentUser: this.userSlide[0],
+            currentUserIndex: this.props.currentUserIndex,
+            liked: [],
         };
+        this.heartUser = this.heartUser.bind(this); //bind to claim 'this' is Slider
     }
 
     heartUser() {
-        this.userSlide[this.state.currentUserIndex].liked = true;
+        this.props.userSlide[this.state.currentUserIndex].liked = true;
+        this.props.peopleLikedFunc(this.props.userSlide[this.state.currentUserIndex]);
         this.setState({
             currentUserIndex: this.state.currentUserIndex + 1,
-        })
+        });
+        this.props.countingUserIndex();
     }
+    //this.props.userSlide[this.state.currentUserIndex]
 
     passUser() {
         //do nothing to liked, aka liked == false //should we set it to false explicitly?
+        this.props.userSlide[this.state.currentUserIndex].liked = false;
         this.setState({
             currentUserIndex: this.state.currentUserIndex + 1,
         })
+        this.props.countingUserIndex();
     }
 
     render() {
         console.log(this.state.currentUserIndex);
         return (
-            <div className='Slider'>
+            //<div className='AppLayout'>
+            <div className='IndiPage'>
                 <div className='UserSlide'>
-                    <img src={this.userSlide[this.state.currentUserIndex].picture}></img>
+                    <img src={this.props.userSlide[this.state.currentUserIndex].picture}></img>
                 </div>
                 <div className='UserInfo'>
-                    User Name, User Age
+                    {this.props.userSlide[this.state.currentUserIndex].name}, {this.props.userSlide[this.state.currentUserIndex].age}
                 </div>
                 <div className='Button'>
                     <button className='Heart' onClick={() => { this.heartUser() }}><FaHeart></FaHeart></button>
                     <button className='Cross' onClick={() => { this.passUser() }}><ImCross></ImCross></button>
                 </div>
             </div>
+            //</div>
         );
     }
-}/*
-                {this.userSlide.map((user, index) => {
-                    return (
-                        <div className={index === this.state.currentUserIndex ? 'UserSlide Active' : 'UserSlide'} key={index}>
-                            {index === this.state.currentUserIndex && (
-                                <img src={user.picture}></img>
-                            )}
-                            {this.state.currentUserIndex}
-                        </div>
-                    );
-                })}
-                */
+}
