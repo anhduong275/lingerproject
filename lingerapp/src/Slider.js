@@ -22,10 +22,8 @@ export default class Slider extends Component {
         });
         this.props.countingUserIndex();
     }
-    //this.props.userSlide[this.state.currentUserIndex]
 
     passUser() {
-        //do nothing to liked, aka liked == false //should we set it to false explicitly?
         this.props.userSlide[this.state.currentUserIndex].liked = false;
         this.setState({
             currentUserIndex: this.state.currentUserIndex + 1,
@@ -36,7 +34,6 @@ export default class Slider extends Component {
     render() {
         console.log(this.state.currentUserIndex);
         return (
-            //<div className='AppLayout'>
             <div className='IndiPage'>
                 <div className='UserSlide'>
                     <img src={this.props.userSlide[this.state.currentUserIndex].picture}></img>
@@ -45,11 +42,10 @@ export default class Slider extends Component {
                     {this.props.userSlide[this.state.currentUserIndex].name}, {this.props.userSlide[this.state.currentUserIndex].age}
                 </div>
                 <div className='Button'>
-                    <button className='Heart' onClick={() => { this.heartUser() }}><FaHeart></FaHeart></button>
-                    <button className='Cross' onClick={() => { this.passUser() }}><ImCross></ImCross></button>
+                    <a className='Heart' onClick={() => { this.heartUser() }}><FaHeart className='emoji'></FaHeart></a>
+                    <a className='Cross' onClick={() => { this.passUser() }}><ImCross className='emoji'></ImCross></a>
                 </div>
             </div>
-            //</div>
         );
     }
 }

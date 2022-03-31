@@ -77,7 +77,8 @@ class App extends Component {
                   countingUserIndex={this.countingUserIndex}></Slider>} />
                 <Route path='/liked' exact element={<Liked userSlide = {users} peopleLiked = {this.state.liked}></Liked>} />
               </Routes>
-
+              
+              <div id="Separator"></div>
               <div className='Routes'>
                 <Link to="/" className='Link'><p>Discover</p></Link>
                 <Link to="/liked" className='Link'><p>Liked</p></Link>
@@ -91,24 +92,4 @@ class App extends Component {
   }
 }
 
-//liked = {this.state.liked}>
-/*
-<div className='AppLayout'>
-            <Slider userSlide = {users}></Slider>
-          </div>
-            {users.map(user => (
-              <img src={user.picture.medium}/>
-            ))}
-            */
-
 export default App;
-
-/*
-const Liked = () => {
-  return (
-    <div>
-      <h1>Display liked users</h1>
-    </div>
-  );
-};
-*/
