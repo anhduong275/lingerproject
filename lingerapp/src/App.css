@@ -181,12 +181,15 @@
 .Title {
   padding-top: 4%;
   padding-left: 5%;
+  height: 30px;
 }
 
 .IndiList {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   padding: 4%;
+  height: 85%; /* Don't know how to fade in & how to correctly set size of navbar yet */
+  overflow: scroll;
 }
 
 .IndiUser {

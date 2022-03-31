@@ -20,24 +20,31 @@ class App extends Component {
     }
     this.peopleLiked = this.peopleLiked.bind(this); //bind to claim 'this' is App
     this.countingUserIndex = this.countingUserIndex.bind(this); //bind to claim 'this' is App
+    this.fetchUsers = this.fetchUsers.bind(this);
   }
 
-  componentDidMount() {
+  fetchUsers() {
     fetch("https://randomuser.me/api/?results=10")
     .then(response => response.json())
     .then((response) => {
       this.setState({
-        users: response.results.map((user, index) => {
+        users: this.state.users.concat(
+          response.results.map((user, index) => {
           return {
               picture: user.picture.large,
               name: user.name.first + ' ' + user.name.last, 
               age: user.dob.age,
               liked: false,
           };
-      }),
+      })),
         loadingStatus: true,
+        currentUserIndex: 0,
       })
     });
+  }
+
+  componentDidMount() {
+    this.fetchUsers();
   }
 
   peopleLiked(likedUser) {
@@ -63,6 +70,15 @@ class App extends Component {
       return (
         <div className='AppLayout'>Loading user...</div>
       )
+    } else if (this.state.currentUserIndex == 10) {
+      return (
+        <div className='AppLayout'>
+          <div className='LoadMoreButton'>
+            <button onClick={this.fetchUsers}>Load More Users</button>
+          </div>
+        </div> 
+      )
+      
     } else {
       return (
         <div className='AppLayout'>
